@@ -71,6 +71,26 @@ public class GuitareString {
         }
         System.out.print(" ]");
     }
+
+    public static GuitareString[] guitareStringTab(String clavier) {
+        GuitareString[] guitareTab = new GuitareString[clavier.length()];
+
+        // Initialise un tableau de GuitareString avec clavier.length() éléments
+        for(int i = 0; i < clavier.length(); i++) {
+            GuitareString guitare = new GuitareString(Math.pow(2, (i-24)/12.0)*1000);
+            guitare.pluck();
+            guitareTab[i] = guitare;
+        }
+
+        return guitareTab;
+    }
+
+    public static GuitareString resetGuitare(GuitareString guitare, int index) {
+        guitare = new GuitareString(Math.pow(2, (index-24)/12.0)*1000);
+        guitare.pluck();
+
+        return guitare;
+    }
    
 
     public static void main(String[] args) {
@@ -78,32 +98,30 @@ public class GuitareString {
 
         // Variables
         String clavier = "abcdefghijkl";
-        GuitareString[] guitareTab = new GuitareString[clavier.length()];
-
-        // Initialise un tableau de GuitareString avec clavier.length() éléments
-        for(int i = 0; i < clavier.length(); i++) {
-            GuitareString guitare = new GuitareString(Math.pow(2, (i-24)/12.0)*1000);
-            System.out.println(guitare.frequency);
-            guitare.pluck();
-            guitareTab[i] = guitare;
-        }
+        GuitareString[] guitareTab = guitareStringTab(clavier); 
 
         // Joue le tableau de GuitareString
         while(true) {
             GuitareString guitare;
-            String touche = scanner.nextLine();
             String[] clavierTab = clavier.split("");
             afficheTab(clavierTab);
 
+            String touche = scanner.nextLine();
+
+            // Boucle sur chaque lettre du clavier pour vérifier
+            //si l'entrée utilisateur est dans le clavier
             for(int j = 0; j < clavier.length(); j++) {
                 if(clavierTab[j].equals(touche)) {
                     guitare = guitareTab[j];
-                    while(true) {
+                    while(guitare.time() < 100500) {
                         StdAudio.play(guitare.sample());
                         guitare.tic();
                     }
+                    guitareTab[j] = resetGuitare(guitare, j);
                 }
             }
+            System.out.println(touche);
+            System.out.println(clavier);
         }
     }
 }
