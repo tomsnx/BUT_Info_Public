@@ -120,8 +120,6 @@ public class GuitareString {
                     guitareTab[j] = resetGuitare(guitare, j);
                 }
             }
-            System.out.println(touche);
-            System.out.println(clavier);
         }
     }
 }
