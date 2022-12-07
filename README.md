@@ -1,2 +1,2 @@
 # BUT_Info_Public
-Je met mes projets et mes cours ici.
+Je met mes cours et mes projets liés au BUT ici.
