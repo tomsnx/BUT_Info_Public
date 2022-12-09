@@ -85,11 +85,9 @@ public class GuitareString {
         return guitareTab;
     }
 
-    public static GuitareString resetGuitare(GuitareString guitare, int index) {
-        guitare = new GuitareString(Math.pow(2, (index-24)/12.0)*1000);
-        guitare.pluck();
-
-        return guitare;
+    public static void resetGuitare(GuitareString[] guitareTab, int index) {
+        guitareTab[index] = new GuitareString(Math.pow(2, (index-24)/12.0)*1000);
+        guitareTab[index].pluck();
     }
    
 
@@ -113,11 +111,11 @@ public class GuitareString {
             for(int j = 0; j < clavier.length(); j++) {
                 if(clavierTab[j].equals(touche)) {
                     guitare = guitareTab[j];
-                    while(guitare.time() < 100500) {
+                    while(guitare.time() < 10000) {
                         StdAudio.play(guitare.sample());
                         guitare.tic();
                     }
-                    guitareTab[j] = resetGuitare(guitare, j);
+                    resetGuitare(guitareTab, j);
                 }
             }
         }
