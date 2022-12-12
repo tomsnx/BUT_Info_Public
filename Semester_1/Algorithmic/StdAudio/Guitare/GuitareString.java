@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.*;
 
 public class GuitareString {
@@ -9,7 +8,6 @@ public class GuitareString {
     int toc = 0;
     int n;
 
-    private double frequency;
     private RingBuffer buffer;
 
     /**
@@ -18,7 +16,6 @@ public class GuitareString {
      * @param frequency
      */
     public GuitareString(double frequency) {
-        this.frequency = frequency;
         n = (int)((StdAudio.SAMPLE_RATE/frequency+(1/2)) + 0.5f);
         buffer = new RingBuffer(n);
     }
@@ -51,7 +48,7 @@ public class GuitareString {
      * Retourne simplement le prochain échantillon à envoyer sur la sorte audio
      * @return
      */
-    private double sample() {
+    public double sample() {
         return buffer.pick();
     }
 
@@ -60,7 +57,7 @@ public class GuitareString {
      * ont été effectués depuis le début de la simulation
      * @return
      */
-    private int time() {
+    public int time() {
         return toc;
     }
 
@@ -96,7 +93,7 @@ public class GuitareString {
 
         // Variables
         String clavier = "abcdefghijkl";
-        GuitareString[] guitareTab = guitareStringTab(clavier); 
+        GuitareString[] guitareTab = guitareStringTab(clavier);
 
         // Joue le tableau de GuitareString
         while(true) {
@@ -106,12 +103,15 @@ public class GuitareString {
 
             String touche = scanner.nextLine();
 
+            System.out.print("Hello");
+
             // Boucle sur chaque lettre du clavier pour vérifier
-            //si l'entrée utilisateur est dans le clavier
+            // si l'entrée utilisateur est dans le clavier
             for(int j = 0; j < clavier.length(); j++) {
                 if(clavierTab[j].equals(touche)) {
                     guitare = guitareTab[j];
-                    while(guitare.time() < 10000) {
+
+                    while(guitare.time() < 100000) {
                         StdAudio.play(guitare.sample());
                         guitare.tic();
                     }
