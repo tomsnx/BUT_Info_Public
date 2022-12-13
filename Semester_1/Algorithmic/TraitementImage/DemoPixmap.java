@@ -8,14 +8,44 @@ public class DemoPixmap {
     public static byte[][] traceCadre(byte[][] imgIn, int e){
         final int I_DIM = imgIn.length ;
         final int J_DIM = imgIn[0].length ;
+        final int WHITE = 255;
+        final int BLACK = 0;
 
         byte[][] imgOut = new byte[I_DIM][J_DIM] ;
         
-        /* votre code ici */
+        for(int i = 0; i < I_DIM; i++) {
+            for(int j = 0; j < J_DIM; j++) {
+                imgOut[i][j] = (byte)(WHITE - imgIn[i][j]);
+                if(i < e) {
+                    imgOut[i][j] = (byte)BLACK;
+                }
+                if(i <= I_DIM && i > I_DIM - e) {
+                    imgOut[i][j] = (byte)BLACK;
+                }
+                if(j < e) {
+                    imgOut[i][j] = (byte)BLACK;
+                }
+                if(j <= J_DIM && j > J_DIM - e) {
+                    imgOut[i][j] = (byte)BLACK;
+                }
+            }
+        }
 
         return imgOut ;
     }
 
+    public static void traceDiago(byte[][] imgIn, int e) {
+        final int I_DIM = imgIn.length ;
+        final int J_DIM = imgIn[0].length ;
+
+        for(int i = 0; i < I_DIM; i++) {
+            for(int j = 0; j < J_DIM; j++) {
+                if(j == i || (j > i - e)) {
+                    imgIn[i][j] = (byte)(0);
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
         BytePixmap img;
@@ -32,12 +62,13 @@ public class DemoPixmap {
          */
         for(int i=0; i< img.height; i++)
             for(int j=0; j<img.width; j++)
-                imgIn[i][j] = img.data[i*img.width + j] ;
+                imgIn[i][j] = img.data[i * img.width + j] ;
 
         /*
         * Appels aux fonctions de traitement
         */
-        imgOut = traceCadre(imgIn, 3) ;
+        imgOut = traceCadre(imgIn, 3);
+        traceDiago(imgOut, 3);
 	
         /*
          * imgIn 2D dans img 1D
