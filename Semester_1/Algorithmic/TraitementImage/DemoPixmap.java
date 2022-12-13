@@ -40,7 +40,15 @@ public class DemoPixmap {
 
         for(int i = 0; i < I_DIM; i++) {
             for(int j = 0; j < J_DIM; j++) {
-                if(j == i || (j > i - e)) {
+                if(j == i) {
+                    imgIn[i][j] = (byte)(0);
+                }
+            }
+        }
+
+        for(int i = I_DIM - 1; i != 0; i--) {
+            for(int j = J_DIM - 1; j != 0; j--) {
+                if(j == i) {
                     imgIn[i][j] = (byte)(0);
                 }
             }
