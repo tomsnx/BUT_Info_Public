@@ -29,8 +29,8 @@ CREATE TABLE autre_table(
 -- Insérer des données dans une table
 INSERT INTO une_table(id, nom, prenom, date_naissance)
 VALUES (NULL, 'AAA', 'aaa', '1990-01-01'),
-VALUES (NULL, 'BBB', 'bbb', '1990-02-01'),
-VALUES (NULL, 'CCC', 'ccc', '1990-03-01');
+       (NULL, 'BBB', 'bbb', '1990-02-01'),
+       (NULL, 'CCC', 'ccc', '1990-03-01');
 
 -- Afficher une table avec les types de données et les paramètres
 DESCRIBE une_table;
