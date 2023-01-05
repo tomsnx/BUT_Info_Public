@@ -39,7 +39,7 @@ def iThPrime(n):
 def decomp(n):
     tab = []
 
-    if(n < 2):
+    if n < 2:
         return False
 
     while (n % 2 == 0): # boucle pour les 2
@@ -57,5 +57,65 @@ def decomp(n):
     tab.append(n)
     return tab
 
-for i in range (1000000000001, 1000000000011):
-    print(decomp(i))
+# for i in range (1000000000001, 1000000000011):
+#     print(decomp(i))
+
+def racine(n):
+    a = 1
+    b = n
+    if b < 2:
+        return False
+
+    while (b % 4 == 0): # boucle pour les 2
+        b //= 4
+        a *= 2
+
+    d = 3
+    while(d * d <= b): # boucle pour les impairs
+        if b%(d*d) == 0:
+            b //= d*d
+            a *= d
+        else:
+            d += 2
+    return a, b
+
+# print(racine(56))
+# print(racine(36))
+# print(racine(13))
+# print(racine(32))
+# print(racine(5866080))
+
+def pgcd(a, b):
+    tabA = decomp(a)
+    tabB = decomp(b)
+    p = 1
+
+    # Corrigé
+
+    for i in tabA:
+        if i in tabB:
+            p *= i
+            tabB.remove(i)
+    return p
+
+    # ========= Mon Algo =========
+    # i = 0
+    # j = 0
+    # while i < len(tabA):
+    #     while j < len(tabB):
+    #         if tabA[i] == tabB[j]:
+    #             p *= tabB[j]
+    #             break
+    #         j += 1
+    #     i += 1
+    # if p == 2 or p == 1:
+    #     return p
+    # if p != 1:
+    #     return p // 2
+    # ========= ========= =========
+
+# print(pgcd(12, 18))
+# print(pgcd(2, 2))
+# print(pgcd(45, 28))
+# print(pgcd(4488, 18876))
+# print(pgcd(2074, 96))
