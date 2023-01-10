@@ -34,25 +34,80 @@ public class DemoPixmap {
         return imgOut ;
     }
 
-    public static void traceDiago(byte[][] imgIn, int e) {
-        final int I_DIM = imgIn.length ;
-        final int J_DIM = imgIn[0].length ;
+    /**
+     * Trace 2 diagonales d'épaisseur e dans l'image
+     * @param imgIn image d'entrée
+     * @param e epaisseur des diagonales
+     * @return image avec les diagonales tracées
+     */
+    public static byte[][] traceDiagos(byte[][] imgIn, int e) {
+        final int I_DIM = imgIn.length;
+        final int J_DIM = imgIn[0].length;
+
+        byte[][] imgOut = new byte[I_DIM][J_DIM];
+        
+        for(int i = 0; i < I_DIM; i++) {
+            for(int j = 0; j < J_DIM; j++) {
+                imgOut[i][j] = imgIn[i][j];
+            }
+        }
 
         for(int i = 0; i < I_DIM; i++) {
             for(int j = 0; j < J_DIM; j++) {
-                if(j == i) {
-                    imgIn[i][j] = (byte)(0);
+                if(i == j || i == I_DIM - j) {
+                    for(int k = 0; k < e; k++) {
+                        if(i + k < I_DIM && j + k < J_DIM) {
+                            imgOut[i + k][j + k] = 0;
+                        }
+                        if(i - k >= 0 && j - k >= 0) {
+                            imgOut[i - k][j - k] = 0;
+                        }
+                        if(i + k < I_DIM && j - k >= 0) {
+                            imgOut[i + k][j - k] = 0;
+                        }
+                        if(i - k >= 0 && j + k < J_DIM) {
+                            imgOut[i - k][j + k] = 0;
+                        }
+                    }
                 }
+            }
+        }
+        return imgOut;
+    }
+
+    public static byte[][] averageFilter2D(byte[][] imgIn, int filterSize) {
+        byte[][] imgOut = imgIn;
+        final int I_DIM = imgOut.length;
+        final int J_DIM = imgOut[0].length;
+        int marge = (int)(filterSize / 2);
+        double sum;
+
+        for(int i = 0; i < I_DIM; i++) {
+            for(int j = 0; j < J_DIM; j++) {
+                if(i < marge && j < marge) {
+                    /* Prend le carré pour faire la moyenne */
+                    for(posY = i - marge; posY < filterSize; posY++) {
+                        for(posX = j - marge; posY < filterSize; posY++) {
+                            sum += imgOut[posX][posY];
+                        }
+                    }
+                } else {
+                    /* Prend le carré pour faire la moyenne */
+                    for(posY = i - marge; posY < filterSize; posY++) {
+                        for(posX = j - marge; posY < filterSize; posY++) {
+                            sum += imgOut[posX][posY];
+                        }
+                    }
+                }
+            }
+        }
+    
+                
+                sum
             }
         }
 
-        for(int i = I_DIM - 1; i != 0; i--) {
-            for(int j = J_DIM - 1; j != 0; j--) {
-                if(j == i) {
-                    imgIn[i][j] = (byte)(0);
-                }
-            }
-        }
+        return imgOut;
     }
 
     public static void main(String[] args) {
@@ -68,15 +123,15 @@ public class DemoPixmap {
          /*
          * image 1D dans imgIn 2D
          */
-        for(int i=0; i< img.height; i++)
-            for(int j=0; j<img.width; j++)
+        for(int i = 0; i < img.height; i++)
+            for(int j = 0; j < img.width; j++)
                 imgIn[i][j] = img.data[i * img.width + j] ;
 
         /*
         * Appels aux fonctions de traitement
         */
-        imgOut = traceCadre(imgIn, 3);
-        traceDiago(imgOut, 3);
+        //imgOut = traceCadre(imgIn, 3);
+        //imgOut = traceDiagos(imgIn, 3);
 	
         /*
          * imgIn 2D dans img 1D

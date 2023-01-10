@@ -1,6 +1,10 @@
 
 public class InsertSort {
 
+    /**
+     * Affiche un tableau d'entier 1D
+     * @param tab
+     */
     public static void afficheTab(int[] tab) {
         System.out.print("[ ");
         for(int i = 0; i < tab.length - 1; i++) {
@@ -10,11 +14,17 @@ public class InsertSort {
         System.out.print(" ]");
     }
 
+    /**
+     * Tri par insertion
+     * @param tab
+     * @return
+     */
     public static int[] insertSort1D(int[] tab) {
 
         for(int i = 1; i < tab.length; i++) {
             int x = tab[i];
             int j = i;
+
             while(j > 0 && tab[j - 1] > x) {
                 tab[j] = tab[j - 1];
                 j--;
@@ -26,7 +36,7 @@ public class InsertSort {
 
     public static void main(String[] args) {
 
-        int[] tab = { 11, 2, 6, 7, 3, 9, 10, 5};
+        int[] tab = { 11, 2, 6, 7, 3, 9, 10, 5 };
 
         afficheTab(insertSort1D(tab));
     }
